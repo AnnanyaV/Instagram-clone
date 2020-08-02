@@ -41,7 +41,7 @@ public class PostActivity extends AppCompatActivity {
 
     private ImageView close;
     private ImageView imageAdded;
-    private SocialAutoCompleteTextView description;
+    SocialAutoCompleteTextView description;
     private TextView post;
 
     @Override
@@ -79,9 +79,10 @@ public class PostActivity extends AppCompatActivity {
         pd.setMessage("Uploading");
         pd.show();
 
-        if(imageUri != null){
-            final StorageReference filepath= FirebaseStorage.getInstance().getReference("Posts").child(System.currentTimeMillis()+"."
-            + getFileExtension(imageUri));
+        if(imageUri != null) {
+            final StorageReference filepath = FirebaseStorage.getInstance().getReference("Posts").child(System.currentTimeMillis() + "."
+                    + getFileExtension(imageUri));
+
 
             StorageTask uploadtask= filepath.putFile(imageUri);
             uploadtask.continueWithTask(new Continuation() {
@@ -113,7 +114,7 @@ public class PostActivity extends AppCompatActivity {
                     DatabaseReference mHashTagRef= FirebaseDatabase.getInstance().getReference().child("HashTags");
                     List<String> hashTags= description.getHashtags();
                     if(!hashTags.isEmpty()){
-                        for(String tag: hashTags){
+                        for(String tag : hashTags){
                             map.clear();
                             map.put("tag", tag.toLowerCase());
                             map.put("postid", postId);
